@@ -24,7 +24,7 @@ Les principaux processus de traitement au niveau des interfaces usagers sont :
 
 
 ### Comment l'exécuter
-- Tester un service dans un browser : localhost
+- Tester un service dans un browser : localhost:80
 
 Utiliser l'application
 - Tester le serveur web dans un browser : localhost/usager
