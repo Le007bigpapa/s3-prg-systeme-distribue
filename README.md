@@ -24,8 +24,7 @@ Les principaux processus de traitement au niveau des interfaces usagers sont :
 
 
 ### Comment l'exécuter
-@@ -15,4 +35,4 @@ Démarrer le serveur d'application
-- Tester un service dans un browser : localhost:8888/api/getallmessages
+- Tester un service dans un browser : localhost
 
 Utiliser l'application
 - Tester le serveur web dans un browser : localhost/usager
