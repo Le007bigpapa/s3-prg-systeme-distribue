@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.fgen.api.mapper.TacheMapper">
+
+    <!-- Requête pour sélectionner les tâches avec des filtres sur l'usager et le projet -->
+    <select id="selectTache" resultType="ca.usherbrooke.fgen.api.business.Tache">
+        SELECT app.tache.id_tache,
+               titre,
+               description,
+               id_projet,
+               cip_createur,
+               id_tache_parent
+        FROM app.tache
+                 LEFT JOIN app.usager_tache ON app.tache.id_tache = app.usager_tache.id_tache
+        WHERE (app.usager_tache.cip_usager, id_projet) = (COALESCE(#{cipUsager}, cip_usager), COALESCE(#{idProjet}, id_projet))
+    </select>
+
+    <!-- Ajouter une tâche -->
+    <insert id="addTache">
+        INSERT INTO app.tache (titre, description, id_projet, cip_createur, id_tache_parent, date_creation)
+        VALUES (#{titre}, #{description}, #{idProjet}, #{cipCreateur}, #{idTacheParent}, now())
+    </insert>
+
+    <!-- Ajouter une tâche pas de parent loll-->
+    <insert id="addTachePasDeParent">
+        INSERT INTO app.tache (titre, description, id_projet, cip_createur, date_creation)
+        VALUES (#{titre}, #{description}, #{idProjet}, #{cipCreateur}, now())
+    </insert>
+
+    <!-- Supprimer une tâche -->
+    <delete id="removeTache">
+        DELETE FROM app.tache WHERE tache.id_tache = #{idTache}
+    </delete>
+
+
+    <!-- Modifier une tâche -->
+    <update id="modifyTache">
+            UPDATE app.tache
+            SET titre = #{titre},
+                description = #{description},
+                date_modifier = NOW()
+            WHERE id_tache = #{idTache}
+    </update>
+
+
+    <!-- Afficher une tâche -->
+    <select id="printTache" resultType="ca.usherbrooke.fgen.api.business.Tache">
+        SELECT id_tache, titre, description, id_projet, cip_createur, id_tache_parent
+        FROM app.tache
+        WHERE id_tache = #{idTache}
+    </select>
+
+    <!-- Afficher la table des tâches -->
+    <select id="printTableTache" resultType="ca.usherbrooke.fgen.api.business.Tache">
+        SELECT id_tache, titre, description, id_projet, cip_createur, id_tache_parent
+        FROM app.tache
+    </select>
+
+    <insert id="AddUser" parameterType="ca.usherbrooke.fgen.api.business.ParticipatingUser">
+        insert into app.usager_tache(
+            cip_Usager,
+            id_tache,
+            admin
+        ) values (
+                     #{cip},
+                     #{idTache},
+                     #{admin}
+                 )
+    </insert>
+    <delete  id="deleteTacheUser" parameterType="ca.usherbrooke.fgen.api.business.ParticipatingUser">
+        DELETE FROM app.usager_tache WHERE cip_usager =  #{cip} AND id_tache = #{id}
+    </delete>
+    <select id="listTacheUser" resultType="ca.usherbrooke.fgen.api.business.ParticipatingUser">
+        SELECT cip_usager , id_tache as id , admin FROM app.usager_tache WHERE id_tache = #{idTache}
+    </select>
+</mapper>

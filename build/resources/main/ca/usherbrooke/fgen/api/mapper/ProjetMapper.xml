@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.fgen.api.mapper.ProjetMapper">
+    <select id="selectProjet" resultType="ca.usherbrooke.fgen.api.business.Projet">
+        select titre,
+           description,
+           date_creation,
+           date_modifier,
+           cip_createur,
+           cip_proprietaire,
+           cip_derniere_modif
+        from app.projet
+        where id_projet=(coalesce(#{idProjet}, id_projet))
+    </select>
+
+    <insert id="newProjet" parameterType="ca.usherbrooke.fgen.api.business.Projet">
+        insert into app.projet(
+            titre,
+            description,
+            date_creation,
+            date_modifier,
+            cip_createur,
+            cip_proprietaire,
+            cip_derniere_modif
+        ) values (
+            #{titre},
+            #{description},
+            now(),
+            now(),
+            #{cipCreateur},
+            #{cipCreateur},
+            #{cipCreateur}
+                         )
+    </insert>
+
+    <update id="editProjet">
+        update app.projet
+        set description = #{description},
+            titre = #{titre},
+            date_modifier = now(),
+            cip_derniere_modif = #{cipDerniereModif},
+            cip_proprietaire = #{cipProprietaire}
+        where id_projet = #{idProjet}
+    </update>
+
+    <select id="printListProjet" resultType="ca.usherbrooke.fgen.api.business.Projet">
+        select id_projet,
+               titre,
+               description,
+               date_creation,
+               date_modifier,
+               cip_createur,
+               cip_proprietaire,
+               cip_derniere_modif
+        from app.projet
+        where cip_proprietaire = #{cipProprietaire}
+    </select>
+    <delete id="deleteProjet">
+        DELETE FROM app.projet WHERE id_projet = #{idProjet}
+    </delete>
+
+    <insert id="AddUser" parameterType="ca.usherbrooke.fgen.api.business.ParticipatingUser">
+        insert into app.Usager_projet(
+            cip_Usager,
+            Id_projet,
+            admin
+        ) values (
+                     #{cipUsager},
+                     #{idProjet},
+                     #{admin}
+                 )
+    </insert>
+    <delete  id="deleteProjetUser" parameterType="ca.usherbrooke.fgen.api.business.ParticipatingUser">
+         DELETE FROM app.usager_projet WHERE cip_usager =  #{cipUsager} AND id_projet = #{idProjet}
+    </delete>
+    <select id="listProjetUser" resultType="ca.usherbrooke.fgen.api.business.ParticipatingUser">
+        SELECT cip_usager , id_projet as id , admin FROM app.usager_projet WHERE id_projet = #{idProjet}
+    </select>
+    </mapper>

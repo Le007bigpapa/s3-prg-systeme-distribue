@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Votre Titre</title>
+
+    <script src="./scripts/script.js"></script>
+    <script src="./scripts/login.js"></script>
+    <script src="./scripts/popup.js"></script>
+
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/dashboard.css">
+    <link rel="stylesheet" href="./styles/popup.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="http://localhost:8180/js/keycloak.js"></script>
+
+    <!-- Tabulator -->
+    <link href="./node_modules/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+    <script src="./node_modules/tabulator-tables/dist/js/tabulator.min.js"></script>
+
+    <!-- GridStack -->
+    <link href="./node_modules/gridstack/dist/gridstack.min.css" rel="stylesheet"/>
+    <script src="./node_modules/gridstack/dist/es5/gridstack-all.js"></script>
+
+    <script>    
+        keycloak = new Keycloak({
+            "realm": "usager",
+            "auth-server-url": "http://localhost:8180/",
+            "ssl-required": "external",
+            "clientId": "frontend",
+            "public-client": true,
+            "confidential-port": 0
+        });
+
+        cip = keycloak.preferred_username;
+
+        window.keycloak.init({onLoad: 'login-required'}).then(function (authenticated) {
+            if (authenticated) {
+                window.cip = keycloak.tokenParsed.preferred_username;
+                console.log('cip de l\'usager:', window.cip); // Afficher le nom d'usager dans la consolecip);
+            }
+        }).catch(function () {
+            alert('failed to initialize');
+        });
+    </script>
+
+    <body>
+        <div id="headerContent"></div>
+
+        <button onclick="openPopup()">Ouvrir le popup</button>
+
+        <div id="addWidgetContent"></div>
+
+        <main>
+            <!--<div id="table_tache"></div>-->
+            <div class="grid-stack"></div>
+        </main>
+
+        <div id="footerContent"></div>
+    </body>
+</html>

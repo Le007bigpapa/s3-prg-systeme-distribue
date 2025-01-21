@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.fgen.api.mapper.SessionMapper">
+    <select id="selectSessionOfCip" resultType="ca.usherbrooke.fgen.api.business.Session">
+        select id_session,
+               commencer_a,
+               fini_a,
+               id_tache,
+               cip_usager
+        from app.session
+        where (cip_usager,
+               id_tache) =
+              (coalesce(#{cipUsager}, cip_usager),
+               coalesce(#{idTache}, id_tache))
+    </select>
+
+    <select id="selectSession" resultType="ca.usherbrooke.fgen.api.business.Session">
+        select id_session,
+               commencer_a,
+               fini_a,
+               id_tache,
+               cip_usager
+        from app.session
+        where id_tache = coalesce(#{idTache}, id_tache)
+    </select>
+
+    <select id="isLastSessionUnfinished" resultType="boolean">
+    select count(*) = 1
+    from app.session
+    where cip_usager = #{cipUsager}
+      and id_tache = #{idTache}
+      and fini_a is NULL
+    </select>
+    <insert id="startSession" parameterType="ca.usherbrooke.fgen.api.business.Session">
+        insert into app.session (
+            commencer_a,
+            fini_a,
+            id_tache,
+            cip_usager
+        ) values (
+                     now(),
+                     NULL,
+                     #{idTache},
+                     #{cipUsager}
+                 )
+    </insert>
+    <update id="stopSession" parameterType="map">
+        update app.session
+        set fini_a = NOW()
+        where id_session = (select max(id_session) from app.session)
+          and id_tache = #{idTache}
+          and cip_usager = #{cipUsager}
+    </update>
+
+
+</mapper>

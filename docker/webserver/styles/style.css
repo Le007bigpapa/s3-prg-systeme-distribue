@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    text-align: center;
+}
+
+main {
+    height: 85%;
+}
+
+footer {
+    position: fixed;
+    margin: -5% auto;
+    padding: 10px;
+    bottom: 0;
+    width: 100%;
+    height: 15%;
+    background-color: #333;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+}
+
+footer p, footer nav {
+    margin: 0; /* Réduit les marges des éléments <p> et <nav> à l'intérieur du footer */
+    padding: 0; /* Réduit l'espace intérieur des éléments <p> et <nav> */
+}

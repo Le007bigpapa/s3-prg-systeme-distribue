@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "gridstack": "^10.3.0",
+    "tabulator-tables": "^6.2.3"
+  }
+}

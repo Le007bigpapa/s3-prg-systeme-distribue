@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.fgen.api.mapper.SessionMapper">
+    <select id="selectSessionOfCip" resultType="ca.usherbrooke.fgen.api.business.Session">
+        select id_session,
+               commencer_a,
+               fini_a,
+               id_tache,
+               cip_usager
+        from app.session
+        where (cip_usager,
+               id_tache) =
+              (coalesce(#{idTache}, id_tache),
+               coalesce(#{cipUsager}, cip_usager))
+    </select>
+
+    <select id="selectSession" resultType="ca.usherbrooke.fgen.api.business.Session">
+        select id_session,
+               commencer_a,
+               fini_a,
+               id_tache,
+               cip_usager
+        from app.session
+        where (id_tache) =
+              (coalesce(#{idTache}, id_tache))
+    </select>
+</mapper>

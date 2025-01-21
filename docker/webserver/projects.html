@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Projet</title>
+
+    <link href="node_modules/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+    <script src="node_modules/tabulator-tables/dist/js/tabulator.min.js"></script>
+
+    <!-- Inclure le CSS de ton projet -->
+    <link rel="stylesheet" href="styles/style.css">
+    <!-- Inclure ton JS spécifique -->
+    <script src="scripts/script.js"></script>
+    <script src="http://localhost:8180/js/keycloak.js"></script>
+    <script src="scripts/usager.js"></script>
+    <script src="scripts/project.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="scripts/authentificationKeycloak.js"></script>
+    <script src="scripts/projet_script_modification.js"></script>
+
+</head>
+
+<body>
+<div id="headerContent"></div>
+
+<main>
+    <h1>Liste des projets</h1>
+
+
+
+    <!-- Grille principale avec trois colonnes -->
+    <div class="container">
+        <!-- Colonne de gauche -->
+        <div class="column">
+            <h2>Modifier un projet</h2>
+            <label for="editID">ID à modifier:</label>
+            <input type="text" id="editID" name="editID" required>
+            <label for="editTitre">Titre à modifier:</label>
+            <input type="text" id="editTitre" name="editTitre" required>
+            <label for="editDescription">Description à modifier:</label>
+            <input type="text" id="editDescription" name="editDescription" required>
+            <label for="editProprietaire">Proprietaire à modifier:</label>
+            <input type="text" id="editProprietaire" name="editDescription" required>
+            <button type="button" id="submitEdit">Envoyer</button>
+
+        </div>
+
+        <!-- Colonne du milieu -->
+        <div class="column">
+            <h2>Nouveau Projet</h2>
+            <label for="newTitre">Titre du nouveau projet:</label>
+            <input type="text" id="newTitre" name="newTitre" required>
+            <label for="newDescription">Description du nouveau projet:</label>
+            <input type="text" id="newDescription" name="newDescription" required>
+            <button type="button" id="submitNew">Envoyer</button>
+        </div>
+
+        <!-- Colonne de droite -->
+        <div class="column">
+            <h2>Supprimer un projet</h2>
+            <label for="deleteProjetID">ID du projet à supprimer:</label>
+            <input type="text" id="deleteProjetID" name="deleteProjetID" required>
+            <button type="button" id="rightSubmit">Envoyer</button>
+        </div>
+    </div>
+
+
+    <table id="data-table"></table>
+</main>
+
+<div id="footerContent"></div>
+
+</body>
+</html>

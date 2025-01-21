@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Votre Titre</title>
+
+    <script src="scripts/script.js"></script>
+    <script src="scripts/tasks.js"></script>
+    <script src="http://localhost:8180/js/keycloak.js"></script>
+    <script src="scripts/usager.js"></script>
+    <link rel="stylesheet" href="styles/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="scripts/authentificationKeycloak.js"></script>
+
+    <!-- Tabulator -->
+    <link href="./node_modules/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+    <script src="./node_modules/tabulator-tables/dist/js/tabulator.min.js"></script>
+</head>
+
+<body>
+<div id="headerContent"></div>
+
+<main>
+    <h1>Mes tâches</h1>
+    <div id="table_tache"></div>
+</main>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const idProjet = urlParams.get('idProjet');
+
+    var table = new Tabulator('#table_tache', {
+        ajaxURL: "http://localhost:8888/api/printtabletache",
+        ajaxConfig: 'GET',
+        ajaxResponse: function (url, params, response) {
+            return response;
+        },
+        columns:[
+            {title:"id", field:"idTache"},
+            {title:"Titre", field:"titre"},
+            {title:"Description", field:"description"},
+            {title:"Projet", field:"idProjet"},
+            {title:"Propriétaire", field:"cipCreateur"},
+            {title:"Tâche parent", field:"idTacheParent"},
+        ],
+        responsiveLayout: true,
+        layout:"fitColumns",
+    });
+
+    table.on("rowClick", function(e, row){
+        window.location.href='singleTask.html?taskId='+row.getData().idTache+'&taskTitle='+row.getData().titre;
+    });
+
+    //TODO filtre pour passer de la page Projet à la page Tâche.
+    table.on("tableBuilt", function(){
+        if(idProjet) {
+            console.log(idProjet);
+            // table.setFilter("idProject", "=", idProjet);    // Ne fonctionne pas
+            // table.setFilter("idProject", "=", 3);           // Ne fonctionne pas
+        }
+    });
+</script>
+
+<div id="footerContent"></div>
+</body>
+</html>

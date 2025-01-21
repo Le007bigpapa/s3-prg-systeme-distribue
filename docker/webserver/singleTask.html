@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Votre Titre</title>
+
+    <script src="scripts/script.js"></script>
+    <script src="scripts/tasks.js"></script>
+    <script src="http://localhost:8180/js/keycloak.js"></script>
+    <script src="scripts/usager.js"></script>
+    <link rel="stylesheet" href="styles/style.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="scripts/authentificationKeycloak.js"></script>
+
+
+    <link rel="stylesheet" href="styles/singleTask.css">
+    <script src="scripts/singleTask/singleTask_header.js"></script>
+</head>
+
+<body>
+    <div id="headerContent"></div>
+
+    <main>
+        <h1 id="title">Tâche 1</h1>
+        <h2>
+            <button class="chrono" id="chrono">
+                <h1>
+                    <span>Start chrono</span>
+                </h1>
+            </button>
+            <button class="clear" id="clear" onclick=clearChrono()>
+                <h1>
+                    <span id="clearChrono">Clear chrono</span>
+                </h1>
+            </button>
+            <span id="chronoDisplay"></span>
+        </h2>
+
+        <h3 id="informationTâche">
+            <div id="spanContainer">
+                <span id="propriétaire"></span>
+                <span id="totalTime">Temps total : </span>
+                <span>Contributeurs : </span>
+                <span id="contributeur"></span>
+            </div>
+        </h3>
+
+        <h5 id="filtreIndicator">
+            <button id="filtreTableauCIP">Afficher les sessions de tout le monde</button>
+            <button id="filtreTableauPourcentage">Temps en %</button>
+        <h5>
+        
+
+        <table id="tableauDonnees">
+            <thead>
+              <tr>
+                <th>CIP Usager</th>
+                <th>Commencé À</th>
+                <th>Fin À</th>
+                <th>Temps Total</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        
+
+        <script src="scripts/singleTask/singleTask_body.js"></script>
+
+        <div id="response"></div>
+        
+
+
+        <div id="example-table"></div>
+    </main>
+
+    <div id="footerContent"></div>
+</body>
+</html>
